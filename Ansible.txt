@@ -2,6 +2,8 @@ Modified by Anusha Nandam
 
 Ansible -- Ansible is a powerful IT automation tool
 
+Imran added new line
+
 $ sudo vi /etc/hostname --> can see the hostname and edit it and shutdown the shell
                             to see changes applied to hostname
 $ sudo shutdown now -r --> for shutting down the shell connection
