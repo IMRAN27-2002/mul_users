@@ -1,0 +1,66 @@
+AzCopy -- to copy data to and from your azure table storage
+
+--to access storage account can be done using cmds but not through azure portal
+
+-- Azure Migrate --> helps assess how on-premises workloads will perform and cost
+
+-- Offline method --> Data Box(100 TB),Data Box Disk(8 TB), Data Box Heavy (1 PB)
+-- used for storing data from acc. to that device shipped to our location
+   then send to Azure Data Center there they upload data into our storage acc. quickly for us
+   and also wiped from that device after upload
+-- online method --> Azure Stack Edge (Edge device) when we have own data center with good speed internet preferred
+                     Data Box Gateway -- like a VM with agent installed on it 
+-- Azure File Sync is a service that allows users to sync files between on-premises and cloud Windows servers.
+-- Zero-Trust Model --> helps to check secure, for eg even on apps inside a firewall
+
+Azure AD MFA works by requiring two or more of the following authentication methods: 
+ • Something you know, typically a password. 
+ • Something you have, such as a trusted device that's not easily duplicated, like a phone or hardware key.
+ • Something you are - biometrics like a fingerprint or face scan. 
+
+-- Azure Active Directory (Azure AD) allows organizations to synchronize on-premises directories 
+   to enable a consistent identity experience between cloud and on-premises.
+
+-- The secure score feature in Defender for Cloud enables you to achieve below two main goals: 
+   • to help you understand your current security situation 
+   • to help you efficiently and effectively improve your security
+
+Azure Free services 
+-- RG's, Virtual network (up to 50), Load balancer (basic)
+-- Azure Active Directory (basic), Network security groups, Free-tier web apps (up to 10)
+
+-- The Total Cost of Ownership (TCO) calculator is a free tool that anyone can use 
+   to estimate the costs of migrating their data and applications to Azure and predict potential savings
+
+-- Azure Blueprints --> a template for subscription
+
+-- Azure Arc --> where we can see and manage all your on-prem infrastructure, anywhere
+   Azure Arc simplifies governance and management by delivering a consistent multi-cloud and on-premises management platform. Azure Arc allows you to manage resources outside of Azure, 
+   including servers, Kubernetes clusters, Azure data services on-premises, SQL servers and VMs.             
+
+-- Azure Monitor --> logs -- we see KQL 
+-- Kusto Query Language (KQL) is a powerful tool to explore your data and discover patterns, identify anomalies and outliers, create statistical modeling, and more. 
+   The query uses schema entities that are organized in a hierarchy similar to SQLs: databases, tables, and columns.
+-- Azure Service Health allows you keep track of Azure resource, both your specifically deployed resources and the overall status of Azure. Azure Service Health is composed of Azure status, the service health service, and Resource Health.
+
+-- Azure Monitor is a comprehensive monitoring solution for Azure services that includes several monitoring tools and services. You can use Azure Monitor to monitor applications, VMs, containers, DB, security or networking events in Azure, other clouds, or on-premises.
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
