@@ -1,0 +1,97 @@
+-- Ansible --> Automation tool
+ eg: for automating web app. deployment
+-- inventory file --> has server hosts info like host_connection,username,password,...
+-- then ansible-playbook has tasks to run on those servers given in inventory file
+
+** eg: start a web app.
+   cmd: FLASK_APP=/opt/app.py nohup flask run --host=0.0.0.0 & 
+
+-- we create separate files for host variables with name host_vars
+-- for each host can have separate variable file group variables with group_vars
+
+-- Include Statements - by creating each .yml file, for each task and using include
+			can be mentioned in Ansible Playbook
+cmd to run playbook -- ansible-playbook playbook.yml -i inventory.txt
+
+-- cmd to create role using galaxy
+-- ansible-galaxy init mysql_db --> for creating a role name mysql_db with diff. files in it
+-- ansible-galaxy search mysql --> searches for all mysql roles
+
+-- async directive --> how long to run ?
+   pool --> How frequently to check ?(default 10 sec)
+-- keep pool: 0 --> to make tasks run one after other without wait
+-- async_status --> check status of an async task
+   -- it takes input of Job ID
+-- Strategy --> uses a linear strategy by default 
+   linear --> it is the way of executing every task for each server host in parallel
+   Free --> here, one server doesn't wait for other server to run cmd's 
+   Batch --> it uses linear but we can specify how many to run at the same time
+    eg: serial: 3 or 30% --> for 3 at a time
+
+-- if more server hosts are present at the same time then only 5 can run at the same time
+   As mentioned in ansible.cfg file with forks: 5 --> here we change to req.
+
+** Error_handling **
+-- any_errors_fatal: true --> makes the playbook stop when one server stops all other servers too
+
+-- ignore_errors: yes --> doesn't stop task in playbook 
+
+-- failed_when --> fail on a condition
+   eg: failed_when: "'Error' in command_output.stdout"
+   --> checks if there is  any word error in command_output file 
+   --> if error word present then failed_when =true so play will be failed
+
+** Jinja2 Template : template engine for python
+
+-- String Manipulation - Filters
+
+{{ my_name }} == Bond
+{{ my_name|upper }} = BOND
+{{ my_name|lower }} = bond
+{{ my_name|title }} = Bond
+{{ my_name|replace("Bond","Bourne") }} = Bourne
+{{ my_name|default("James") }} = James
+
+** Filters - LIST and SET
+
+{{ [1,2,3]| min }} --> for min, max,unique (no dupes)
+{{ [1,2,3,4]| union([4,5]) }} --> intersect also same
+{{ 100 | random }} --> 0,100 any random no.
+{{ ["The","name","is","Bond"] | join(" ") }} --> The name is Bond
+
+** File Filters
+
+{{ "/etc/hosts" | basename }} --> hosts
+{{ "c:\windows\hosts" | win_basename }} --> hosts
+{{ "c:\windows\hosts" | win_splitdrive }} --> ["C:","\windows\hosts"]
+{{ "c:\windows\hosts" | win_splitdrive | first }} --> "C:"
+{{ "c:\windows\hosts" | win_splitdrive | last }} --> "\windows\hosts"
+
+
+** File LOOKUP 
+{{ lookup('csvfile','target1 file=/tmp/credentials.csv delimiter=,') }}
+            |	        |		|
+    (Type of File)(Value to Lookup) (File to Lookup)
+-- type of files are INI,DNS,MongoDB
+
+** ANSIBLE-VAULT
+cmd's
+-- ansible-vault encrypt inventory.txt -- encrypts contents in inventory.txt file
+we create a password for vault file
+-- ansible-playbook playbook.yml -i inventory.txt -ask-vault-pass
+   --> asks for vault password while running playbook
+-- ansible-playbook playbook.yml -i inventory.txt -vault-password-file ~./vault_pass.py
+   --> store vault password in a .py file
+-- ansible-vault view inventory.txt --> to view inventory.txt
+-- ansible-vault create inventory.txt --> create vault file
+
+** Dynamic Inventory --> is the inventory info. retrieved programatically 
+
+** Custom Modules
+
+-- Use ANSIBLE-PLAYABLE --> to generate custom module and test easily
+
+
+
+
+
