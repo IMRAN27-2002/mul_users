@@ -1,0 +1,154 @@
+Ansible -- Ansible is a powerful IT automation tool
+
+$ sudo vi /etc/hostname --> can see the hostname and edit it and shutdown the shell
+                            to see changes applied to hostname
+$ sudo shutdown now -r --> for shutting down the shell connection
+
+$ sudo yum install ansible --> for installig Ansible on CentOS
+
+		*** ANSIBLE INVENTORY **
+
+** In order to work with multiple servers Ansible needs to establish 
+   connectivity to those servers.
+
+-- This is done using SSH
+   for Linux and PowerShell Remoting for Windows.
+-- That's what makes Ansible Agentless.
+-- Agentless means that you don't need to install any additional software
+   on the target machines to be able to work with Ansible.
+
+-- Information about these target systems is stored in an inventory file.
+
+If you don't create a new inventory file
+Ansible uses the default inventory file located
+--- at etc/Ansible/hosts location.
+
+-- You can also group different servers together by defining it like this under the 
+name of the group within square brackets, and define the list
+of servers part of that group in the lines below.
+
+-- You can have multiple groups defined in a single inventory file
+
+eg:
+server1.company.com
+server2.company.com
+
+[mail]
+server3.company.com
+server4.company.com
+
+[db]
+server5.company.com
+
+
+
+** adding an alias for each server at the beginning of 
+the line and assigning the address of that server to 
+Ansible_host parameter.
+
+** Inventory Parameters:
+-- ansible_connection - ssh/winrm/localhost
+-- ansible_port - 22/5986
+-- ansible_user - root/administrator
+-- ansible_ssh_pass - Password
+
+** Ansible_connection is what defines how
+   Ansible connects to the target server.
+
+$ ansible target1 -m ping -i inventory.txt 
+-->tries to connect to target1
+
+** Dictionary - Unordered
+   List - Ordered
+   Hash # - Comments
+
+node02,node01
+User: bob
+Password: caleston123 
+
+		**** ANSIBLE PLAYBOOKS
+
+Ansible Playbooks are Ansible's orchestration language.
+
+-- It is in Playbooks where we define what we want Ansible to do.
+-- It is a set of instructions you provide Ansible to work its magic.
+-- For example, it can be as simple as
+   running a series of commands on different servers in a sequence, and 
+   restarting those servers in a particular order.
+
+** A Playbook is a single YAML file ,containing a set of plays.
+   
+A play defines a set of activities(tasks) to be run on a single or a group of hosts.
+A task is a single action to be performed on a host.
+
+Some examples of a task are executing a command
+or a script on the host, installing a package on the host,
+or performing a shutdown or a restart operation.
+
+
+-- But you must ensure that the host or group is first defined in the inventory 
+   file we created earlier.
+
+The host defined in the inventory file
+must match the host used in the Playbooks,
+and all connection information for the host is retrieved from the inventory file.
+
+If you specify a group, instead,
+the listed tasks will be executed
+on all the hosts listed under that group simultaneously.
+
+** The different actions run by tasks are called modules.
+
+> ansible-playbook playbook_name.yml --> runs ansible playbook
+
+>ansible-playbook --help --> gives the help cmds
+
+
+2 ways of running ansible.
+
+-- First using the ansible command
+-- and then using the ansible-playbook command.
+
+ansible cmds
+
+> ansible <hosts> -a <command>
+> ansible all -a "/sbin/reboot" --> reboots
+> ansible <hosts> -m <module> 
+> ansible target1 -m ping --> pings 
+
+here is a group that ansible creates by default and that's called the "all" group.
+
+And the all group simply means that it's a built-in group that ansible creates
+
+and it has all the servers in our inventory file part of that group.
+
+		**** Ansible Roles ****
+-- use of roles is to make the tasks reusable
+-- also to organize them into diff. directories
+-- Ansible Galaxy is a community where we get diff. roles
+-- In this way we can share these roles onto Galaxy
+
+** Can built our role from scratch
+$ ansible-galaxy init mysql --> for initializing our own role in mysql dir. here
+
+-- Default dir. where ansible searches for roles 
+-- This is found in /etc/ansible/ansible.cfg 
+    roles_path = /etc/ansible/roles
+-- From ansible CLI using $ ansible-galaxy search mysql
+
+$ ansible-galaxy install role_name --> it installs role to default dir.
+
+$ ansible-galaxy list --> views the list of ansible roles installed
+
+$ ansible-config dump | ROLE --> shows the roles path in config file
+
+$ ansible-galaxy install role_name -p ./roles --> installs in current dir. under roles
+
+
+** node01 ansible_host=node01 ansible_ssh_pass=caleston123 --> can create a inventory file with host,user & pwd
+
+
+
+
+
+
