@@ -1,0 +1,151 @@
+	***	AZ-104 AZURE ADMINISTRATOR	***
+-- In azure, Budgets used to get email alerts for budget increase than expected
+
+-- Azure shared disks - allows a managed disk to be attached to mul. VM's
+   concept is, can attach disk to mul. vm's but data in os layer 
+   not reflects on other vm from 1st vm stored data
+-- we can run custom scripts in vm with extensions and selecting file from the storage acc.
+cloud init -- to install packages on a linux VM
+-- Boot diagnostics (Monitoring tab) - gives log details of failures
+-- Run cmd(vm-->settings) - to run scripts remotely
+
+-- Azure Dedicated Hosts
+This service provides physical servers to host virtual machines. 
+The physical server is dedicate to the Azure subscription.
+
+The benefits of Azure Dedicated Hosts is that no other virtual machines 
+from any other customers would be placed on the physical server.
+
+-- Availability zone -> phy. loc. within azure region made up of 1 or more data centers 
+
+VM Scale Sets --> gr. of vm's to scale up or down vm's hosting app.'s
+
+$ sudo app-get install stress --> makes the load onto vm
+
+$ sudo stress --cpu 1000 --> makes the cpu size increase
+
+Image - copy of full VM includes data disks or OS disk
+
+In networking --> capture --> create an image
+
+** proximity placement group --> for making vm's closer to each other
+	(present in ADV. sec of vm creation)
+Deployment Slots -- to keep changes intact and update can create diff. slots 
+eg: if 2 versions are there then can have prod. slot, Staging slot 
+-- to use deploy. slots must have standard or higher like premium versions
+
+-- with Standard feature can use Auto-Scaling
+
+-- by Disassociating the public IP addr.eg: we can't reach the server running in vm created 
+
+-- can publish file from v studio to web app
+
+-- achieve without public ip access using VNet Integration
+
+-- using custom domains can allocate own domain name to azure web app
+
+-- Backup service can add backups using custom backup linking to the st. acc.
+
+
+	**	VNet	**
+In a Subnet mask, 255.255.255.0 -->0 is for hostname & 255.255.255 is network ID
+
+-- there are 256 total no. of hosts , 254 are usable
+-- 192.0.2.0 for network id & 192.0.2.255 for broadcast id
+-- for subnet mask - 255.255.255.0  we have 192.0.2.0/24 -- 8+8+8=24 -- last digit for hosts
+-- for subnet mask - 255.255.0.0 we have    192.0.2.0/16 -- 8+8=16 -- last 2 digits for hosts
+
+** In Subnet, we can make boundary for making diff. app. in VM run on each subnet in a VNet
+   for comm. b/w subnets, security for each subnet can be given
+   
+-- can't delete a subnet if a VM linked to it
+
+-- can add NIC to VM when VM is in deallocated state / stop
+
+-- NSG -> for Inbound & Outbound traffics
+-- In NSG, we have priority no. by which each rule given order of priority
+
+-- subnet-nsg comes first when network-nsg is also there
+
+-- NAT (Network Address Translator) rules for connecting to VM using 
+   public IP in NAT rule along with  
+
+Frontend IP, Backend IP-- ?
+
+-- Azure Application Gateway --> manage traffic on web app
+ 
+-- VNet Peering -- for 2 VNet's to comm. it is used
+-- VPN -> for privacy of what we are connecting to internet from laptop/system
+
+-- point to site vpn --> connect small no. of machines to Azure VNet
+-- site to site vpn --> connect machines of on-premises to Azure VNet
+
+-- can generate self-signed root certificate using PowerShell
+
+** For Site-to-Site connection we apply in Add connection of Vnetwork-gateway 
+
+-- Virtual WAN hub, can be used to connect on-premise to vnet without having VNet Gateway
+-- ExpressRoute --> don;t go over public Internet
+-- user defined route --> if there are 3 subnets then one vm can comm. to dest. VM 
+   in between there is central VM
+
+-- Network Watcher 
+   --> Next hop tool for telling how packets route
+** Azure Firewall --> can login to vm using DNAT rule through firewall Public IP with port no.
+
+-- through azure we can add DNS records using DNS Zone and specify DNS domain bought
+   to connect to DNS Zone for getting connected to vm which was specified by a record
+
+-- Azure Storage Explorer tool --> for managing storage acc.
+ eg: if employees need to work with only st. acc. then can use st. explorer
+
+-- access st. acc. --> 
+- Access Keys
+  has connection string used in .net programs for st. acc. access
+- SAS (Shared Access Signature) not only at blob level also at storage level 
+- Azure AD Authentication --> for access to employee in an org. best method
+
+** Redundant Storage
+-- LRS - 3 copies in one data center
+-- ZRS - 3 az's has copies
+-- GRS - 2 regions each have 3 copies like LRS
+-- Read-access GRS - here 2ndary region also can be accessed at same time 
+		     but in GRS only access is made to 2ndary when primary region fails 
+-- Geo-zone-redundant st. -- here we have 1 copy in 3 az's each and 2ndary has copies as LRS
+-- Read Access geo-zone-redundant st. -- we can access this even without 1st region fail
+
+-- Access tiers - Hot (more st. cost, less access cost),
+		  Cool (low st. cost, high access cost),
+		  Archive (low st.cost, high access cost than cool tier)
+-- can use life cycle management in st. acc. for making rules to check blob access tiers and 
+   make transition to respective tiers
+
+-- In st. acc. , in Data protection can set blob versioning
+-- Object replication --> to copy blobs from src st. acc. to dest. acc.
+
+** Fileshare --> for having a fileserver for each emp. of an org. 
+-  we can connect fileshare to local system by running code in power shell
+-  we can connect local system to fileshare using Map Network Drive option
+   using url to link
+
+** IE enhanced security configuration --> is off that helps to install software on VM
+
+** Azure AD --> identity provider, users, groups created
+-- Through RBAC (Role Based Access Control) to assign to users certain resource permissions
+
+** can create Dynamic Groups using Dynamic Queries with properties
+-- can add Custom Domain using Azure AD then use them for the users while creating
+-- while creating VM in Management section, can enable login with AD for joining VM to AD
+
+** we can add External guest user to Azure AD also
+
+-- create a Bulk create for many users using template 
+
+-- can have per user MFA enabled 
+-- Through "Conditional Access" we can enable MFA using conditions --> for Azure AD Premium license 
+
+-- Resource Tags --> can be used for filtering, can't be inherited to resources in a RG
+-- Resource Locks --> 
+   2 types -- 1. read only 2. Delete 
+-- Azure Ploicies --> Like only allow certain regions for certain RG's
+
